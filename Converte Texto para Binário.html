@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Texto para Binário</title>
+    <style>
+        input, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 20px; /* Tamanho da fonte (ajuste conforme necessário) */
+        }
+
+        .character-counter {
+            font-size: 20px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .character-counter.green-bold {
+            color: green;
+            font-weight: bold;
+        }
+
+        .spacer {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function atualizarBinario() {
+            var texto = document.getElementById("texto").value;
+            var binario = "";
+
+            for (var i = 0; i < texto.length; i++) {
+                var charCode = texto.charCodeAt(i);
+                var binarioChar = charCode.toString(2);
+                binarioChar = '00000000'.slice(binarioChar.length) + binarioChar;
+                binario += binarioChar + " ";
+            }
+
+            document.getElementById("resultado").value = binario;
+
+            // Atualiza o contador de caracteres
+            var characterCounter = document.getElementById("character-counter");
+            characterCounter.innerText = "Caracteres (mínimo de 16 para 12 sementes e 32 para 24 sementes):   " + texto.length;
+
+            // Adiciona a classe green-bold se tiver 16 ou mais caracteres
+            if (texto.length >= 16) {
+                characterCounter.classList.add("green-bold");
+            } else {
+                characterCounter.classList.remove("green-bold");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adiciona foco ao campo de texto ao carregar a página
+            var textarea = document.getElementById('texto');
+            textarea.focus();
+
+            // Adiciona o evento de escuta para atualizar o binário conforme se digita
+            textarea.addEventListener('input', atualizarBinario);
+
+            // Adiciona evento para selecionar o conteúdo do campo de resultado ao pressionar Tab
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    e.preventDefault();  // Evita que a tecla Tab mude de foco padrão
+                    document.getElementById('resultado').select();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Conversor de Texto para Binário</h1>
+    <label for="texto">Digite o texto:</label>
+    <textarea id="texto" rows="4"></textarea>
+    <div class="character-counter" id="character-counter">Caracteres (mínimo de 16 para 12 sementes e 32 para 24 sementes): 0</div>
+    <div class="spacer"></div>
+    <label for="resultado">Resultado Binário:</label>
+    <textarea id="resultado" rows="4" readonly></textarea>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-3 224 Encrypter Off Line</title>
+    <script src="sha3.min.js"></script>
+</head>
+<body>
+    <h2>SHA-3 224 Encrypter Off Line</h2>
+    <label for="input">Digite o texto:</label><br>
+    <textarea id="input" cols="50" rows="5" onkeydown="checkTab(event)" oninput="encryptText()"></textarea><br><br>
+    <label for="output">Texto criptografado:</label><br>
+    <textarea id="output" cols="50" rows="5" readonly></textarea><br><br>
+
+    <script>
+        function encryptText() {
+            var input = document.getElementById("input").value;
+            var output = document.getElementById("output");
+            var hashed = sha3_224(input); // SHA-3 com 224 bits
+            output.value = hashed;
+        }
+
+        function checkTab(event) {
+            if (event.key === "Tab") {
+                event.preventDefault(); // Evita o comportamento padrão do Tab
+                document.getElementById("output").focus(); // Muda o foco para a caixa de texto do texto criptografado
+                document.getElementById("output").select(); // Seleciona todo o texto na caixa de texto do texto criptografado
+            }
+        }
+    </script>
+</body>
+</html>
